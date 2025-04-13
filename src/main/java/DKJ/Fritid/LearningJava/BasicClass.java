@@ -1,40 +1,75 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package DKJ.Fritid.LearningJava;
 
-import java.io.Serializable;
+import jakarta.persistence.*;
+import java.util.UUID;
+import java.util.Collection;
+import java.sql.Date;
 
-import javax.persistence.Entity;
+@Entity
+@Table(name = "Classes")
+public class BasicClass {
 
-import java.util.*;
+    @Id
+    @Column(name = "BasicClassId")
+    private UUID id;  
 
-import javax.persistence.OneToMany;
-/**
- *
- * @author danie
- */
-@Entity (name="BasicClasses")
-public class BasicClass implements Serializable{
-    
-public UUID BasicClassId;
+    private String testField;
 
-public String TestField;
+    private int refnr;
 
-public int Refnr;
+    @OneToMany(mappedBy = "basicClass", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Collection<BasicEntry> basicEntries;
 
-@OneToMany
-public Collection<BasicEntry> BasicEntries;
-public Date Oprettet;
 
-public BasicClass(String testField, int refnr) {
-    super();
-    BasicClassId = UUID.randomUUID();
-    TestField = testField;
-    Refnr = refnr;
-    
+    private Date oprettet;
+
+
+    public BasicClass() {}
+
+
+    public BasicClass(String testField, int refnr) {
+        this.testField = testField;
+        this.refnr = refnr;
+    }
+
   
-}
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getTestField() {
+        return testField;
+    }
+
+    public void setTestField(String testField) {
+        this.testField = testField;
+    }
+
+    public int getRefnr() {
+        return refnr;
+    }
+
+    public void setRefnr(int refnr) {
+        this.refnr = refnr;
+    }
+
+    public Collection<BasicEntry> getBasicEntries() {
+        return basicEntries;
+    }
+
+    public void setBasicEntries(Collection<BasicEntry> basicEntries) {
+        this.basicEntries = basicEntries;
+    }
+
+    public Date getOprettet() {
+        return oprettet;
+    }
+
+    public void setOprettet(Date oprettet) {
+        this.oprettet = oprettet;
+    }
 }

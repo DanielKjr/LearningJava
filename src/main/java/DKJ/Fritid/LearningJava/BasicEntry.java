@@ -1,52 +1,53 @@
 package DKJ.Fritid.LearningJava;
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
-import javax.persistence.Entity;
-import javax.persistence.MapKey;
-
-import java.io.Serializable;
+import jakarta.persistence.*;
 import java.util.UUID;
-import javax.persistence.Basic;
 
+@Entity
+@Table(name = "Entries")
+public class BasicEntry {
 
-/**
- *
- * @author danie
- */
-@Entity (name="BasicEntries")
-public class BasicEntry implements Serializable {
+    @Id
+    @Column(name = "BasicEntryId")
+    private UUID id;  
 
-    @MapKey
-    private UUID basicEntryId;
-    
-    private UUID BasicClassId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BasicClassId", referencedColumnName = "BasicClassId", insertable = false, updatable = false)
+    private BasicClass basicClass;  
 
     private String valueToLoad;
-    public UUID GetID(){
-        return basicEntryId;
-    }
-    public void SetId(UUID value){
-        basicEntryId = value;
+
+  
+    public BasicEntry() {}
+
+
+    public BasicEntry(UUID id, UUID basicClassId, String valueToLoad) {
+        this.id = id;
+        this.valueToLoad = valueToLoad;
     }
 
-    public UUID GetBasicClassId(){
-        return BasicClassId;
+ 
+    public UUID getId() {
+        return id;
     }
 
-    public void SetBasicClassId(UUID value){
-        BasicClassId = value;
+    public void setId(UUID id) {
+        this.id = id;
     }
-    public String GetValueToLoad(){
+
+    public BasicClass getBasicClass() {
+        return basicClass;
+    }
+
+    public void setBasicClass(BasicClass basicClass) {
+        this.basicClass = basicClass;
+    }
+
+    public String getValueToLoad() {
         return valueToLoad;
     }
-    public void SetValueToLoad(String value){
-        valueToLoad = value;
-    }
 
-    public BasicEntry() {
-       basicEntryId = UUID.randomUUID();
+    public void setValueToLoad(String valueToLoad) {
+        this.valueToLoad = valueToLoad;
     }
 }
